@@ -1,0 +1,45 @@
+---
+title: "Realisai Sparepart 2020"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(datasets)
+data(faithful)
+library(datasets)
+data(WorldPhones)
+
+```
+# Page 1
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+Waiting time between eruptions and the duration of the eruption for the
+Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
+
+
+# OVERHOULE KILN 4
+
+```{r}
+library(plotly)
+#fig <- plot_ly(midwest, x = ~percollege, color = ~state, type = "box")
+#fig
+ovh_kl4_21 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRU8uTN3BIn8o1E76jrL13uKdaqILveDCNd-qUbJnSypXiMYbF7-dYXESZyHh1BkAg9l-uaLaUUWQgU/pub?gid=0&single=true&output=csv")
+
+
+sum_uk_ovh_kl4_21 <- ovh_kl4_21 %>% 
+  group_by(NAMA.SEKSI.PG) %>% 
+  summarise(Amount = sum(Amount.in.LC, na.rm = TRUE)) %>% 
+  arrange(desc(Amount))
+  
+fig <- plot_ly(sum_uk_ovh_kl4_21, x = ~Amount, y = ~NAMA.SEKSI.PG, type = 'bar', orientation = 'h')
+
+fig
+```
+
+#end
