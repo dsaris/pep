@@ -29,15 +29,15 @@ Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
 library(plotly)
 #fig <- plot_ly(midwest, x = ~percollege, color = ~state, type = "box")
 #fig
-ovh_kl4_21 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRU8uTN3BIn8o1E76jrL13uKdaqILveDCNd-qUbJnSypXiMYbF7-dYXESZyHh1BkAg9l-uaLaUUWQgU/pub?gid=0&single=true&output=csv")
+#ovh_kl4_21 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRU8uTN3BIn8o1E76jrL13uKdaqILveDCNd-qUbJnSypXiMYbF7-dYXESZyHh1BkAg9l-uaLaUUWQgU/pub?gid=0&single=true&output=csv")
 
 
-sum_uk_ovh_kl4_21 <- ovh_kl4_21 %>% 
-  group_by(NAMA.SEKSI.PG) %>% 
-  summarise(Amount = sum(Amount.in.LC, na.rm = TRUE)) %>% 
-  arrange(desc(Amount))
-  
-fig <- plot_ly(sum_uk_ovh_kl4_21, x = ~Amount, y = ~NAMA.SEKSI.PG, type = 'bar', orientation = 'h')
+#sum_uk_ovh_kl4_21 <- ovh_kl4_21 %>% 
+ # group_by(NAMA.SEKSI.PG) %>% 
+ # summarise(Amount = sum(Amount.in.LC, na.rm = TRUE)) %>% 
+  #arrange(desc(Amount))
+raw_KOB2_seksi <- readRDS(file = "data/raw_KOB2_seksi.rds")  
+fig <- plot_ly(raw_KOB2_seksi, x = ~total, y = ~NAMA.SEKSI, type = 'bar', orientation = 'h')
 
 fig
 ```

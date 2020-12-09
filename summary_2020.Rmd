@@ -1,0 +1,35 @@
+---
+title: "SUMMARY REALISASI SPAREPART 2020"
+author: "Aris Warsito"
+date: "9 Desember 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include=FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(dplyr)
+library(plotly)
+
+
+```
+
+
+
+#Realisasi Kumulatif 2020
+```{r kum_20, echo=FALSE, warning=FALSE}
+raw_KOB2 <- readRDS(file ="data/raw_KOB2.rds")
+monthly_raw_KOB2 <- raw_KOB2 %>% 
+  group_by(MONTH) %>% 
+  summarise(total.bulan = sum(Amount.in.LC)) %>% 
+  mutate(total.kumulatif = cumsum(total.bulan))
+
+fig <- plot_ly(monthly_raw_KOB2, x = ~MONTH, y = ~total.kumulatif, name = 'Kumulatif',type = 'scatter', mode = 'lines', offline = TRUE)
+fig <- fig %>% add_trace(y = ~total.bulan, name = 'realisasi bulanan', line = list(color = '#292e28', width = 3))
+fig 
+
+
+```
+

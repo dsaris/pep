@@ -33,8 +33,16 @@ saveRDS(real_kob_2020, file = "data/real_kob_2020.rds")
 raw_kob <- readRDS(file = "data/real_kob_2020.rds")
 
 
+#import file daftar unit kerja 2020
+
+daftar_uk_20 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSTW8D3_kHHwzaG28UnZPq6_8ZK9ckH1LF-sLYDc_-4iEvdulhD0QJK7ij_rL8qWWISKcY6RxMhyet1/pub?gid=1209260409&single=true&output=csv")
+
+saveRDS(daftar_uk_20, file = "data/daftar_uk_20.rds")
 
 
-
-
-
+daftar_uk_20 <- daftar_uk_20 %>% 
+  select(kode.uk, NAMA.SEKSI, Nama.Unit, Nama.Department) %>% 
+  mutate(CORRECTED.UK.PG = kode.uk)
+raw_kob <- raw_kob %>% 
+  select(-NAMA.SEKSI.PG, -NAMA.UNIT, -NAMA.DEPARTEMEN)
+raw_KOB2 <- merge(raw_kob, daftar_uk_20, by = "CORRECTED.UK.PG")
