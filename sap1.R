@@ -2,9 +2,8 @@
 
 library(tidyverse)
 library(dplyr)
+library(lubridate)
 
-glimpse(raw_kob)
-glimpse(tail(raw_kob))
 
 #apply  new section, unit and department, joining by kode seksi
 daftar_uk_20 <- daftar_uk_20 %>% 
@@ -14,17 +13,24 @@ raw_kob <- raw_kob %>%
   select(-NAMA.SEKSI.PG, -NAMA.UNIT, -NAMA.DEPARTEMEN)
 raw_KOB2 <- left_join(raw_kob, daftar_uk_20, by = "Corrected.UK.PG")
 
+#create date column from YEAR,MONTH,DATE
+raw_KOB2 <- raw_KOB2 %>% 
+  mutate(date1 = make_date(YEAR, MONTH, DAY),
+         tanggal = day(date1),
+         bulan = month(date1,label = TRUE),
+         tahun = year(date1))
 
-#Grouping by section and tottal amount
+
+
+#Grouping by section and total amount
 raw_KOB2_seksi <- raw_KOB2 %>% 
-  group_by(NAMA.SEKSI) %>% 
  summarize(total = sum(Amount.in.LC))
 #save to RDS
 saveRDS(raw_KOB2_seksi, file = "data/raw_KOB2_seksi.rds")
 saveRDS(raw_KOB2, file = "data/raw_KOB2.rds")
 
 #daftar seksi isNA
-View(filter(raw_KOB2, is.na(NAMA.SEKSI)))
+View(head(raw_KOB2))
 
 
 

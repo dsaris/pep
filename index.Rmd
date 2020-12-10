@@ -36,7 +36,8 @@ library(plotly)
  # group_by(NAMA.SEKSI.PG) %>% 
  # summarise(Amount = sum(Amount.in.LC, na.rm = TRUE)) %>% 
   #arrange(desc(Amount))
-raw_KOB2_seksi <- readRDS(file = "data/raw_KOB2_seksi.rds")  
+raw_KOB2_seksi <- readRDS(file = "data/raw_KOB2_seksi.rds")
+
 fig <- plot_ly(raw_KOB2_seksi, x = ~total, y = ~NAMA.SEKSI, type = 'bar', orientation = 'h')
 
 fig

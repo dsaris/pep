@@ -22,12 +22,13 @@ library(plotly)
 ```{r kum_20, echo=FALSE, warning=FALSE}
 raw_KOB2 <- readRDS(file ="data/raw_KOB2.rds")
 monthly_raw_KOB2 <- raw_KOB2 %>% 
-  group_by(MONTH) %>% 
+  group_by(bulan) %>% 
   summarise(total.bulan = sum(Amount.in.LC)) %>% 
   mutate(total.kumulatif = cumsum(total.bulan))
 
-fig <- plot_ly(monthly_raw_KOB2, x = ~MONTH, y = ~total.kumulatif, name = 'Kumulatif',type = 'scatter', mode = 'lines', offline = TRUE)
-fig <- fig %>% add_trace(y = ~total.bulan, name = 'realisasi bulanan', line = list(color = '#292e28', width = 3))
+fig <- plot_ly(monthly_raw_KOB2, x = ~bulan, y = ~total.kumulatif, name = 'Kumulatif',type = 'scatter', mode = 'lines', offline = TRUE)
+#fig <- fig %>% add_trace(y = ~total.bulan, name = 'realisasi bulanan', line = list(color = '#292e28', width = 3))
+fig <- fig %>% layout(yaxis = list(type = "log"))
 fig 
 
 

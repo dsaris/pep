@@ -46,3 +46,5 @@ daftar_uk_20 <- daftar_uk_20 %>%
 raw_kob <- raw_kob %>% 
   select(-NAMA.SEKSI.PG, -NAMA.UNIT, -NAMA.DEPARTEMEN)
 raw_KOB2 <- merge(raw_kob, daftar_uk_20, by = "CORRECTED.UK.PG")
+
+
